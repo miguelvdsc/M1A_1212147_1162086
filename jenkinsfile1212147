@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    environment {
+    
+        // LINUX
+        MAVEN_HOME = '/usr/share/maven'
+        JAVA_HOME = '/usr/share/java'
+        
+        GITHUB_URL = 'https://github.com/miguelvdsc/M1A_1212147_1162086.git'
+        GITHUB_BRANCH = 'main'
+        GITHUB_ID = 'githubcredentials'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from your repository
+                git url: "${GITHUB_URL}", branch: "${GITHUB_BRANCH}", credentialsId: "${GITHUB_ID}"
+            }
+        }
+
+    }
+
+
+    post {
+        success {
+            // Actions to take when the pipeline succeeds
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            // Actions to take when the pipeline fails
+            echo 'Pipeline failed!'
+        }
+    }
+}
